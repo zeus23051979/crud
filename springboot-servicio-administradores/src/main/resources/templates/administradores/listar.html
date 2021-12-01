@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+
+
+
+	<div class="container py-4">
+	<a  class="btn  text-white bg-company-orange" th:href="@{/administrador/form}">Agregar nuevo admin</a>
+		<div class="card bg-light text-wine">
+		
+			<div class="card-header" th:text="${titulo}"></div>
+			
+			<div class="card-body">
+
+				<div th:if="${#lists.isEmpty(listAdmin)}" class="alert alert-danger" th:text="'NO EXISTEN ADMINISTRADORES'"></div>
+				
+				<table th:if="${not #lists.isEmpty(listAdmin)}" class="table table-bordered table-spriped table-sm table-hover my-4">
+					<thead class="thead-inverse">
+						<tr>							
+							
+							<th>Nombre</th>		
+							<th>Area</th>						
+							<th>Email</th>
+							<th>Estatus</th>
+							<th>Detalles</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="adm :  ${listAdmin}">							
+							
+							<td th:text="${adm.nombre}"></td>
+							<td th:text="${adm.area}"></td>							
+							<td th:text="${adm.email}"></td>
+							<td th:if="${adm.status} == true" th:text="'activo'"></td>
+							
+							<td>
+							<a th:href="@{/administrador/edit/} + ${adm.id}" ><img th:src="@{/images/edit.png}" width="20" height="20" /></a>
+							<a  th:href="@{/administrador/delete/} + ${adm.id}"  onclick="return confirm('Estas seguro que desea eliminar?')"><img th:src="@{/images/delete.png}" width="20" height="20" /></a>
+							<a href="#"><img th:src="@{/images/ver.png}" width="20" height="20" /></a>
+							</td>
+						</tr>
+					</tbody>
+				</table>	
+										
+								
+			</div>
+		</div>
+	</div>
+
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>
